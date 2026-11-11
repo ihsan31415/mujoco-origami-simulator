@@ -1,0 +1,23 @@
+{
+  "crease_configuration": "/home/syntropy/origami/modularizing/crease_patterns/reference_miura_4x4.json",
+  "duration": 20.0,
+  "fold_duration": 1e-06,
+  "trajectory": [
+    1.0,
+    0.0,
+    0.0
+  ],
+  "initial_centroid": [
+    0.0,
+    0.0
+  ],
+  "final_centroid": [
+    -0.10886817822204872,
+    -0.006475270292792211
+  ],
+  "rendered_forward_displacement": -0.10886817822204872,
+  "evaluator_forward_displacement": -0.10886817822204872,
+  "difference": 0.0,
+  "video_path": "/home/syntropy/origami/modularizing/individual_simulation.mp4",
+  "video_written": true
+}
