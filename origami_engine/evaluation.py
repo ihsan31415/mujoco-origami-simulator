@@ -7,7 +7,9 @@ from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 
-from .simulation import VIB_AMP_X, VIB_AMP_Z, VIB_FREQ, normalize_creases, run_simulation
+from .constants import VIB_AMP_X, VIB_AMP_Z, VIB_FREQ
+from .dynamics import run_simulation
+from .serialization import normalize_creases
 
 
 def _as_trajectory_vector(trajectory):

@@ -6,7 +6,9 @@ from pathlib import Path
 
 import numpy as np
 
-from .simulation import Crease, M, V, load_creases_from_json
+from .constants import M, V
+from .serialization import load_creases_from_json
+from .types import Crease
 
 DEFAULT_PATTERN_JSON = Path(__file__).resolve().parent.parent / "crease_patterns" / "reference_miura_4x4.json"
 

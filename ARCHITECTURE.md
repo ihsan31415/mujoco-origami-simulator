@@ -2,38 +2,27 @@
 
 ## Module layout
 
-- `origami_engine/simulation.py`
-  - Core domain + simulation mechanics.
-  - Defines `Crease`, `Pattern`, `SimulationResult`.
-  - Reconstructs crease graphs/faces, builds MuJoCo XML, drives table vibration, runs simulation.
-  - Owns shared physical/config constants and JSON crease I/O.
+- `origami_engine/constants.py` — shared physical/solver constants.
+- `origami_engine/types.py` — `Crease`, `Pattern`, `SimulationResult` domain types.
+- `origami_engine/backend.py` — optional MuJoCo import guard (private).
+- `origami_engine/geometry.py` — crease graph / face reconstruction (`build_pattern`).
+- `origami_engine/model.py` — MuJoCo XML generation (`generate_xml`).
+- `origami_engine/dynamics.py` — simulation loop, table vibration, centroids (`run_simulation`, `drive_table`, `paper_centroid`).
+- `origami_engine/serialization.py` — crease normalization and JSON I/O (`normalize_creases`, `load_creases_from_json`, `save_creases_to_json`), validated against the packaged schema in `origami_engine/schemas/` via `jsonschema`.
+- `origami_engine/evaluation.py` — fitness-oriented APIs (`evaluate_individual`, `evaluate_population`, `compute_forward_displacement`).
+- `origami_engine/patterns.py` — reusable reference crease patterns and default JSON path.
+- `origami_engine/simulation.py` — backward-compatible facade re-exporting the core surface.
+- `origami_engine/__init__.py` — curated public package exports (library-style imports).
+- `origami_engine/render_individual.py` — visual validation entry point.
+- `origami_engine/example.py` — minimal evaluation workflow for single and population runs.
 
-- `origami_engine/evaluation.py`
-  - Fitness-oriented APIs:
-    - `evaluate_individual(...)`
-    - `evaluate_population(...)`
-  - Keeps trajectory projection and batch orchestration separate from simulation internals.
-
-- `origami_engine/patterns.py`
-  - Reusable reference crease providers and default JSON path.
-  - Prevents duplication across scripts/tests.
-
-- `origami_engine/__init__.py`
-  - Public package exports for library-style imports.
-
-## Entry points
-
-- `render_individual.py`
-  - Visual validation workflow.
-  - Loads crease JSON (default `crease_patterns/reference_miura_4x4.json`) and renders MP4.
-
-- `example.py`
-  - Minimal evaluation workflow for single and population runs.
+Entry points unchanged:
+- `render_individual.py` — visual validation workflow.
+- `example.py` — minimal evaluation workflow.
 
 ## Compatibility layer
 
-- `origami_simulation.py` and `evaluation.py` are compatibility wrappers.
-- Existing imports continue working, but implementation now lives under `origami_engine/`.
+- `origami_simulation.py` and root `evaluation.py` were removed in the modularization; import from `origami_engine` instead. The `origami_engine.simulation` facade re-exports every name they previously provided.
 
 ## Input format
 
@@ -55,6 +44,7 @@ JSON schema:
 
 ## Validation commands
 
-- Tests: `./.venv/bin/python -m pytest tests/test_evaluation.py -q`
-- Example run: `./.venv/bin/python example.py`
-- Render run: `./.venv/bin/python render_individual.py`
+- Tests: `. .venv/bin/activate && python -m pytest tests -q`
+- Example run: `. .venv/bin/activate && python origami_engine/example.py`
+- Render run: `. .venv/bin/activate && python origami_engine/render_individual.py`
+- Usage examples: `. .venv/bin/activate && python examples/01_evaluate_reference.py`

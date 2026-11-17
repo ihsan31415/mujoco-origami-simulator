@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/origami-simulator/crease_pattern.schema.json",
+  "title": "Origami crease pattern",
+  "description": "Input format accepted by origami_engine.load_creases_from_json.",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["creases"],
+      "properties": {
+        "angle_unit": {
+          "description": "Unit for every crease angle; omitted means radians.",
+          "enum": ["radian", "radians", "rad", "degree", "degrees", "deg"],
+          "default": "radian"
+        },
+        "creases": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/crease" }
+        }
+      }
+    },
+    {
+      "description": "Bare list form; angles are radians.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/crease" }
+    }
+  ],
+  "$defs": {
+    "point": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "2D point in sheet coordinates, normally within [0, 1]."
+    },
+    "crease": {
+      "type": "object",
+      "required": ["p1", "p2", "angle"],
+      "properties": {
+        "p1": { "$ref": "#/$defs/point" },
+        "p2": { "$ref": "#/$defs/point" },
+        "angle": {
+          "type": "number",
+          "description": "Signed target fold angle. Negative = mountain fold, positive = valley fold."
+        }
+      }
+    }
+  }
+}
