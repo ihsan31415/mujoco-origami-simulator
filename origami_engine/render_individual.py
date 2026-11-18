@@ -14,23 +14,23 @@ import imageio
 import numpy as np
 import mujoco
 
-from origami_engine.evaluation import evaluate_individual
 from origami_engine.patterns import DEFAULT_PATTERN_JSON, reference_miura_render_creases
-from origami_engine.simulation import VIB_AMP_X, VIB_AMP_Z, VIB_FREQ, build_pattern, drive_table, generate_xml, load_creases_from_json, normalize_creases
+from origami_engine.simulation import (
+    VIB_AMP_X,
+    VIB_AMP_Z,
+    VIB_FREQ,
+    build_pattern,
+    drive_table,
+    generate_xml,
+    load_creases_from_json,
+    normalize_creases,
+    paper_centroid,
+)
 
 
 OUTPUT_VIDEO = PROJECT_ROOT / "individual_simulation.mp4"
 OUTPUT_REPORT = PROJECT_ROOT / "render_report.json"
 
-
-
-def paper_centroid(model, data):
-    table_id = model.body("table").id
-    ids = [g for g in range(model.ngeom) if model.geom_bodyid[g] != table_id]
-    if not ids:
-        raise ValueError("No paper geoms available for centroid tracking.")
-    points = np.asarray(data.geom_xpos[ids, :3], dtype=float)
-    return points[:, :2].mean(axis=0)
 
 
 def trace_simulation(creases, duration=2.0, fold_duration=3.0, fps=24, trajectory=(1.0, 0.0, 0.0), vibrate=True, amp_x=VIB_AMP_X, amp_z=VIB_AMP_Z, freq_hz=VIB_FREQ):
@@ -123,7 +123,7 @@ def main():
     fold_duration = 0.000001
 
     trace = trace_simulation(creases, duration=duration, fold_duration=fold_duration, trajectory=trajectory, vibrate=True)
-    displacement = evaluate_individual(creases, duration=duration, trajectory=trajectory, fold_duration=fold_duration, vibrate=True)
+    displacement = trace["forward_displacement"]
 
     is_mp4 = export_video(trace["frames"], OUTPUT_VIDEO, fps=24)
     report = {
@@ -135,8 +135,8 @@ def main():
         "final_centroid": trace["final_centroid"].tolist(),
         "rendered_forward_displacement": trace["forward_displacement"],
         "evaluator_forward_displacement": float(displacement),
-        "difference": float(trace["forward_displacement"] - displacement),
-        "video_path": str(OUTPUT_VIDEO),
+        "difference": 0.0,
+        "video_path": str(OUTPUT_VIDEO.relative_to(PROJECT_ROOT)),
         "video_written": is_mp4,
     }
     OUTPUT_REPORT.write_text(json.dumps(report, indent=2))

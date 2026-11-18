@@ -1,11 +1,20 @@
+import json
 import math
 
 import numpy as np
 import pytest
 
-from evaluation import evaluate_individual, evaluate_population
-from origami_engine.patterns import reference_miura_legacy_creases
-from origami_simulation import build_pattern, load_creases_from_json, save_creases_to_json
+from origami_engine import (
+    CREASE_SCHEMA,
+    Crease,
+    build_pattern,
+    evaluate_individual,
+    evaluate_population,
+    load_creases_from_json,
+    normalize_creases,
+    reference_miura_legacy_creases,
+    save_creases_to_json,
+)
 
 
 def make_reference_creases():
@@ -16,7 +25,7 @@ def test_input_compatibility_and_pattern_validity():
     creases = make_reference_creases()
     pat = build_pattern(creases)
     assert pat.valid is True
-    assert pat.n_faces if hasattr(pat, "n_faces") else len(pat.faces) > 0
+    assert pat.n_faces > 0
 
 
 def test_basic_execution_returns_finite_displacement():
@@ -88,3 +97,30 @@ def test_evaluate_individual_accepts_json_path(tmp_path):
     value = evaluate_individual(out, duration=0.25, trajectory=(1.0, 0.0, 0.0))
     assert isinstance(value, float)
     assert math.isfinite(value)
+
+
+def test_invalid_pattern_raises():
+    # These segments cannot tile the square sheet, so the pattern is invalid.
+    bad_creases = [
+        Crease((0.0, 0.0), (0.01, 0.0), 0.0),
+        Crease((0.01, 0.0), (0.01, 0.0001), 0.0),
+        Crease((0.01, 0.0001), (0.0, 0.0001), 0.0),
+    ]
+    with pytest.raises(ValueError, match="invalid crease pattern"):
+        evaluate_individual(bad_creases, duration=0.25, trajectory=(1.0, 0.0, 0.0))
+
+
+def test_invalid_json_schema_raises(tmp_path):
+    out = tmp_path / "bad.json"
+    out.write_text(
+        json.dumps(
+            {"angle_unit": "degree", "creases": [{"p1": [0.0, 0.0], "p2": [0.5, 0.5]}]}
+        )
+    )
+    with pytest.raises(ValueError, match="invalid crease JSON"):
+        load_creases_from_json(out)
+
+
+def test_crease_schema_exposed():
+    assert isinstance(CREASE_SCHEMA, dict)
+    assert "oneOf" in CREASE_SCHEMA or "definitions" in CREASE_SCHEMA or "$defs" in CREASE_SCHEMA

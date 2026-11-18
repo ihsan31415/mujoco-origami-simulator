@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "origami-simulator"
+version = "0.1.0"
+description = "MuJoCo origami folding simulator"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "jsonschema>=4.18",
+    "mujoco>=2.3",
+    "numpy>=1.24",
+    "shapely>=2.0",
+    "imageio[ffmpeg]>=2.34",
+]
+
+[project.scripts]
+origami-render = "origami_engine.render_individual:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["origami_engine*"]
+
+[tool.setuptools.package-data]
+origami_engine = ["schemas/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
