@@ -14,7 +14,38 @@ This project is a Python-based origami folding simulator built around MuJoCo. It
 ## Simulation Output
 Below is the physical rendering of the simulation output, demonstrating how the paper layout reacts to active hinge joint torques and support table vibrations:
 
-<video src="individual_simulation.mp4" width="100%" controls title="MuJoCo Origami Simulation Loop"></video>
+<table>
+  <tr>
+    <th>Vibrating Table: Amplitude & Frequency</th>
+    <th>Fold Crease</th>
+    <th>Video Preview</th>
+  </tr>
+  <tr>
+    <td><strong>Lower</strong> amplitude & frequency</td>
+    <td>Partial / standard</td>
+    <td>
+      <video src="https://github.com/user-attachments/assets/15ff98b3-7a72-46c2-9303-e106c88bc71a"
+             width="280" controls muted playsinline></video>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>High</strong> amplitude & frequency</td>
+    <td>Full</td>
+    <td>
+      <video src="https://github.com/user-attachments/assets/ef7d9808-d0a5-4c6b-b33c-2c6a81e11003"
+             width="280" controls muted playsinline></video>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Higher</strong> amplitude & frequency</td>
+    <td>Full</td>
+    <td>
+      <video src="https://github.com/user-attachments/assets/438714c1-f831-43cb-a729-027816fb3ea5"
+             width="280" controls muted playsinline></video>
+    </td>
+  </tr>
+</table>
+
 
 ## Core modules
 - `origami_engine/constants.py` — shared physical/solver constants
