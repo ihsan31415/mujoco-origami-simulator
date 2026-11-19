@@ -95,9 +95,9 @@ Below is the physical rendering of the simulation output, demonstrating how the 
 │   └── 04_evaluate_population.py
 ├── crease_patterns/
 │   └── reference_miura_4x4.json
-├── schema/
-│   ├── SCHEMA.md
-│   └── GEN_EXPERIMENTS.zip
+├── experiments/
+│   ├── TIMELINE.md
+│   └── prototype_notebooks.zip
 ├── tests/
 │   └── test_evaluation.py
 ├── .github/workflows/ci.yml
@@ -163,6 +163,22 @@ python examples/03_inspect_pattern.py
 python examples/04_evaluate_population.py
 ```
 
+
+## Experimental history
+
+This repository also preserves the **experimental stage** of the simulator before it was modularized into `origami_engine/`. These are the historical Jupyter notebooks (not part of the runtime package) that were used to develop the fold physics:
+
+- [`experiments/TIMELINE.md`](experiments/TIMELINE.md) — phase-by-phase prototyping history (contact optimization, viscoelastic tuning, tear fixes, etc.)
+- [`experiments/prototype_notebooks.zip`](experiments/prototype_notebooks.zip) — the archived notebook bundle (`GEN_1` … `GEN_4`)
+
+Unzip the archive and run the notebooks locally:
+
+```bash
+unzip experiments/prototype_notebooks.zip -d experiments/notebooks
+. .venv/bin/activate
+pip install jupyter
+jupyter notebook experiments/notebooks
+```
 
 ## Example crease input
 Crease data is represented as a list of line segments with a start point, end point, and target fold angle. Target angles dictate whether a joint behaves as a **Mountain fold** (negative radians) or a **Valley fold** (positive radians).
