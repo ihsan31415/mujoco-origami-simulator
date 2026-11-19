@@ -1,0 +1,8 @@
+include origami_engine/schemas/*.json
+include docs/crease_pattern_plot.png
+include examples/*.py
+include examples/README.md
+include experiments/TIMELINE.md
+include experiments/prototype_notebooks.zip
+include LICENSE
+include README.md

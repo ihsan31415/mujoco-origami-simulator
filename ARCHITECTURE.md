@@ -1,50 +1,87 @@
-# Architecture Overview
+# Architecture
 
-## Module layout
+The MuJoCo Origami Simulator is structured as an engineering pipeline rather
+than a pure toy example. Crease patterns are normalized into a canonical
+format, polygon faces are built from the sheet layout, MuJoCo XML is
+generated from the resulting pattern, and the net displacement of the paper
+centroid is measured as a forward-folding fitness signal.
 
-- `origami_engine/constants.py` — shared physical/solver constants.
-- `origami_engine/types.py` — `Crease`, `Pattern`, `SimulationResult` domain types.
-- `origami_engine/backend.py` — optional MuJoCo import guard (private).
-- `origami_engine/geometry.py` — crease graph / face reconstruction (`build_pattern`).
-- `origami_engine/model.py` — MuJoCo XML generation (`generate_xml`).
-- `origami_engine/dynamics.py` — simulation loop, table vibration, centroids (`run_simulation`, `drive_table`, `paper_centroid`).
-- `origami_engine/serialization.py` — crease normalization and JSON I/O (`normalize_creases`, `load_creases_from_json`, `save_creases_to_json`), validated against the packaged schema in `origami_engine/schemas/` via `jsonschema`.
-- `origami_engine/evaluation.py` — fitness-oriented APIs (`evaluate_individual`, `evaluate_population`, `compute_forward_displacement`).
-- `origami_engine/patterns.py` — reusable reference crease patterns and default JSON path.
-- `origami_engine/simulation.py` — backward-compatible facade re-exporting the core surface.
-- `origami_engine/__init__.py` — curated public package exports (library-style imports).
-- `origami_engine/render_individual.py` — visual validation entry point.
-- `origami_engine/example.py` — minimal evaluation workflow for single and population runs.
+## Module overview
 
-Entry points unchanged:
-- `render_individual.py` — visual validation workflow.
-- `example.py` — minimal evaluation workflow.
+All runtime code lives under [`origami_engine/`](origami_engine/). Each module
+has a single responsibility:
 
-## Compatibility layer
+| Module | Responsibility |
+|---|---|
+| `types.py` | Core domain types: `Crease`, `Pattern`, `SimulationResult` |
+| `constants.py` | Physical and solver constants shared across the engine |
+| `backend.py` | Optional MuJoCo import guard (lets modules be imported/tested without MuJoCo) |
+| `geometry.py` | Reconstruct polygonal faces and the spanning-tree hinge graph from creases |
+| `model.py` | Assemble MuJoCo XML model from a validated `Pattern` |
+| `dynamics.py` | Run MuJoCo simulation, drive table vibration, compute centroid displacement |
+| `simulation.py` | Facade: high-level `run_simulation()` wrapping geometry → model → dynamics |
+| `evaluation.py` | Fitness API: `evaluate_individual()`, `evaluate_population()` |
+| `serialization.py` | Crease JSON I/O, schema validation, `Crease` normalization |
+| `patterns.py` | Reusable reference crease patterns (Miura-ori etc.) |
+| `plotting.py` | `plot_pattern()` — reference-style crease pattern visualization |
+| `render_individual.py` | Render a single simulation to video (MP4 / GIF fallback) |
+| `example.py` | Minimal end-to-end example |
 
-- `origami_simulation.py` and root `evaluation.py` were removed in the modularization; import from `origami_engine` instead. The `origami_engine.simulation` facade re-exports every name they previously provided.
+## Data flow
 
-## Input format
-
-Crease patterns can be supplied as:
-1. A list of `Crease` objects.
-2. A list of dictionaries with `p1`, `p2`, `angle`.
-3. A JSON file path accepted by `normalize_creases(...)`.
-
-JSON schema:
-
-```json
-{
-  "angle_unit": "degree",
-  "creases": [
-    {"p1": [0.2, 0.0], "p2": [0.45, 0.25], "angle": -180.0}
-  ]
-}
+```
+crease JSON / crease list
+        │
+        ▼
+serialization.normalize_creases()   → list[Crease]
+        │
+        ▼
+geometry.build_pattern()            → Pattern (faces, edges, tree, loops)
+        │
+        ├─► plotting.plot_pattern() → figure (visual inspection)
+        │
+        ▼
+model.generate_xml()                → MuJoCo XML string + info dict
+        │
+        ▼
+dynamics.run_simulation()           → SimulationResult (model, data, centroids)
+        │
+        ▼
+evaluation.*                        → fitness score / population scores
 ```
 
-## Validation commands
+## Key design decisions
 
-- Tests: `. .venv/bin/activate && python -m pytest tests -q`
-- Example run: `. .venv/bin/activate && python origami_engine/example.py`
-- Render run: `. .venv/bin/activate && python origami_engine/render_individual.py`
-- Usage examples: `. .venv/bin/activate && python examples/01_evaluate_reference.py`
+- **Optional MuJoCo import**: `backend.py` isolates the `mujoco` import so
+  geometry, serialization, and plotting modules can be imported and unit-tested
+  without MuJoCo installed. `require_mujoco()` raises a helpful error if a
+  MuJoCo-dependent operation is attempted when it is unavailable.
+- **Signed fold angles**: Mountain folds carry negative angles, Valley folds
+  positive angles. `constants.M` and `constants.V` are the canonical ±45°
+  references.
+- **Pattern validation**: `build_pattern()` checks for sliver faces, correct
+  tiling area, and connected face graphs before producing a valid `Pattern`.
+- **Facade layer**: `simulation.py` re-exports the most-used symbols so
+  consumers can `from origami_engine import run_simulation` without importing
+  every submodule directly.
+
+## Public API
+
+The package's public surface is curated in `origami_engine/__init__.py`.
+Consumers should import from the package root, not from submodules directly:
+
+```python
+from origami_engine import (
+    Crease,
+    Pattern,
+    build_pattern,
+    generate_xml,
+    run_simulation,
+    evaluate_individual,
+    evaluate_population,
+    plot_pattern,
+    load_default_creases,
+    load_creases_from_json,
+    save_creases_to_json,
+)
+```
