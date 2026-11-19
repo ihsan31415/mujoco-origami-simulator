@@ -104,9 +104,7 @@ def export_video(frames, output_path: Path, fps: int = 24):
     if not frames:
         raise ValueError("No frames were captured during the simulation.")
     try:
-        writer = imageio.get_writer(
-            output_path, fps=fps, codec="libx264", output_params=["-pix_fmt", "yuv420p"]
-        )
+        writer = imageio.get_writer(output_path, fps=fps, codec="libx264", output_params=["-pix_fmt", "yuv420p"])
         for frame in frames:
             writer.append_data(frame)
         writer.close()
