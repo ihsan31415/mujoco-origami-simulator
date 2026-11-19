@@ -30,7 +30,7 @@ Below is the physical rendering of the simulation output, demonstrating how the 
   <tr>
     <td style="vertical-align: top; padding-right: 20px;">
       <p align="center">
-        <img src="docs/crease_pattern_plot.png" alt="Reference crease pattern" width="250" style="border:1px solid #d0d0d0; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);" />
+        <img src="docs/crease_pattern_plot.png" alt="Reference crease pattern" width="300" style="border:1px solid #d0d0d0; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);" />
       </p>
       <p align="center"><sub>24 creases | 16 faces | 9 loop edges</sub></p>
     </td>
