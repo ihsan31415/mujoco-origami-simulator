@@ -104,17 +104,32 @@ For in-depth information, see the dedicated documentation files:
 
 ## Quick start
 
-Create a virtual environment and install the package with development dependencies, then run the validation or rendering scripts.
+Install from PyPI with `pip` or `uv`:
 
+### Using pip
 ```bash
 python -m venv .venv
 . .venv/bin/activate
-pip install -e ".[dev]"
+pip install origami-engine[dev]
+```
+
+### Using uv (recommended, faster)
+```bash
+uv pip install origami-engine[dev]
+```
+
+### Without creating a venv (quick test)
+```bash
+pip install origami-engine
+```
+
+### After installation, run the validation suite:
+```bash
 python -m pytest -q tests
 python origami_engine/render_individual.py
 ```
 
-*For detailed installation steps and usage tutorials, see [GETTING_STARTED.md](GETTING_STARTED.md).*
+*For detailed installation steps, environment management, and usage tutorials, see [GETTING_STARTED.md](GETTING_STARTED.md).*
 
 ## Library API (brief)
 
