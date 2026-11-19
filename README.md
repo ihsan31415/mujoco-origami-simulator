@@ -1,7 +1,7 @@
 # MuJoCo Origami Simulator
 
-[![CI](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml/badge.svg)](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/coverage-pytest--cov-green.svg)](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml)
+[![CI](https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/badge/coverage-pytest--cov-green.svg)](https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-red.svg)](LICENSE)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
