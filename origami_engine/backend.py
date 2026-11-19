@@ -9,7 +9,7 @@ imported (and unit-tested) without MuJoCo installed.
 MUJOCO_IMPORT_ERROR: BaseException | None = None
 try:
     import mujoco
-except Exception as exc:  # pragma: no cover - broad catch intentional for import guard
+except Exception as exc:  # noqa: BLE001 - broad catch intentional for import guard
     mujoco = None
     MUJOCO_IMPORT_ERROR = exc
 
