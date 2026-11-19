@@ -177,10 +177,11 @@ pat = build_pattern(creases)              # validate faces / edges
 plot_pattern(creases, pat)                # Mountain=red dashed, Valley=blue dash-dot
 ```
 
-`plot_pattern` draws every crease between `0.0` and `1.0` on both axes, colours
-Mountain folds red dashed and Valley folds blue dash-dot, labels every crease
-with a fixed `180°`, centers a bold face number inside each polygon, and prints
-a title like ``"24 creases | 16 faces | 9 loop edges (valid)"``.
+`plot_pattern` draws the sheet between `0.0` and `1.0` on both axes, colours
+Mountain folds crimson dashed and Valley folds royalblue dash-dot, labels every
+crease with its fold angle in degrees, places gray face indices at each
+polygon's representative point, marks loop edges with a black `x`, and prints a
+title like `"24 creases | 16 faces | 9 loop edges (x)"`.
 
 Run the example script to open the figure interactively:
 
@@ -191,8 +192,11 @@ python examples/05_plot_pattern.py
 A pre-rendered version of the default reference pattern is included in the
 repository at [`docs/crease_pattern_plot.png`](docs/crease_pattern_plot.png):
 
-![Crease pattern plot](docs/crease_pattern_plot.png)
+<p align="center">
+  <img src="docs/crease_pattern_plot.png" alt="Crease pattern plot" width="480" style="border:1px solid #d0d0d0; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);" />
+</p>
 
+<p align="center"><sub>Default reference crease pattern — 24 creases | 16 faces | 9 loop edges</sub></p>
 
 ## Experimental history
 
