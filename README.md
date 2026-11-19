@@ -25,11 +25,24 @@ This project is a Python-based origami folding simulator built around MuJoCo. It
 ## Simulation Output
 Below is the physical rendering of the simulation output, demonstrating how the paper layout reacts to active hinge joint torques and support table vibrations:
 
-<!-- Image on top of the table -->
-<p align="center">
-  <img src="docs/crease_pattern_plot.png" alt="Reference crease pattern" width="300" style="border:1px solid #d0d0d0; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);" />
-</p>
-<p align="center"><sub>Default reference crease pattern — 24 creases | 16 faces | 9 loop edges</sub></p>
+<!-- Another table: image left, description right, referencing JSON -->
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <p align="center">
+        <img src="docs/crease_pattern_plot.png" alt="Reference crease pattern" width="250" style="border:1px solid #d0d0d0; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);" />
+      </p>
+      <p align="center"><sub>24 creases | 16 faces | 9 loop edges</sub></p>
+    </td>
+    <td>
+      <strong>Reference Crease Pattern</strong><br>
+      This table shows the default Miura-ori crease pattern used in simulations. The pattern consists of 24 creases that tile a square sheet, forming 16 polygonal faces with 9 loop edges. <br><br>
+      <a href="origami_engine/schemas/crease_pattern.schema.json"><strong>Crease Pattern JSON Schema</strong></a> — validates the structure of crease input files (angle units, point coordinates, mountain/valley signs).<br>
+      <a href="crease_patterns/reference_miura_4x4.json"><strong>reference_miura_4x4.json</strong></a> — the actual crease pattern data in JSON format, containing the p1, p2, and angle values for each of the 24 creases.<br><br>
+      <em>Mountain folds are negative angles (creasing "up"), Valley folds are positive angles (creasing "down").</em>
+    </td>
+  </tr>
+</table>
 
 <table>
   <tr>
@@ -63,24 +76,7 @@ Below is the physical rendering of the simulation output, demonstrating how the 
   </tr>
 </table>
 
-<!-- Another table: image left, description right, referencing JSON -->
-<table>
-  <tr>
-    <td style="vertical-align: top; padding-right: 20px;">
-      <p align="center">
-        <img src="docs/crease_pattern_plot.png" alt="Reference crease pattern" width="250" style="border:1px solid #d0d0d0; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);" />
-      </p>
-      <p align="center"><sub>24 creases | 16 faces | 9 loop edges</sub></p>
-    </td>
-    <td>
-      <strong>Reference Crease Pattern</strong><br>
-      This table shows the default Miura-ori crease pattern used in simulations. The pattern consists of 24 creases that tile a square sheet, forming 16 polygonal faces with 9 loop edges. <br><br>
-      <a href="origami_engine/schemas/crease_pattern.schema.json"><strong>Crease Pattern JSON Schema</strong></a> — validates the structure of crease input files (angle units, point coordinates, mountain/valley signs).<br>
-      <a href="crease_patterns/reference_miura_4x4.json"><strong>reference_miura_4x4.json</strong></a> — the actual crease pattern data in JSON format, containing the p1, p2, and angle values for each of the 24 creases.<br><br>
-      <em>Mountain folds are negative angles (creasing "up"), Valley folds are positive angles (creasing "down").</em>
-    </td>
-  </tr>
-</table>
+
 
 This project is a Python-based origami folding simulator built around MuJoCo. It reconstructs a crease pattern from 2D line segments, validates the paper topology, generates a MuJoCo model for the folded sheet, applies fold-angle targets, and optionally vibrates the support table to simulate a realistic folding environment. The code is structured as an **engineering library** rather than a pure toy example.
 
