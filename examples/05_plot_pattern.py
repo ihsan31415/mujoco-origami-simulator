@@ -4,6 +4,7 @@ Run from the repository root:
 
     python examples/05_plot_pattern.py
 """
+
 from __future__ import annotations
 
 from pathlib import Path
