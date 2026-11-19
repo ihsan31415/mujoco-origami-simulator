@@ -243,9 +243,9 @@ View any crease pattern at a glance with `plot_pattern`:
 ```python
 from origami_engine import build_pattern, load_default_creases, plot_pattern
 
-creases = load_default_creases()          # default reference pattern
-pat = build_pattern(creases)              # validate faces / edges
-plot_pattern(creases, pat)                # Mountain=red dashed, Valley=blue dash-dot
+creases = load_default_creases()  # default reference pattern
+pat = build_pattern(creases)  # validate faces / edges
+plot_pattern(creases, pat)  # Mountain=red dashed, Valley=blue dash-dot
 ```
 
 `plot_pattern` draws the sheet between `0.0` and `1.0` on both axes, colours

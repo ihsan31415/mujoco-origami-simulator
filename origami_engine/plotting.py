@@ -16,6 +16,7 @@ Supports two calling conventions:
 1. ``plot_pattern(creases)`` — plot from a raw crease list.
 2. ``plot_pattern(creases, pat)`` — plot from a validated :class:`Pattern`.
 """
+
 from __future__ import annotations
 
 import numpy as np
