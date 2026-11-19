@@ -3,6 +3,7 @@ from __future__ import annotations
 """MuJoCo XML generation from a validated crease pattern."""
 
 import numpy as np
+from shapely.geometry import Point
 
 from .backend import require_mujoco
 from .constants import (
@@ -16,15 +17,14 @@ from .constants import (
     MU_PAPER,
     MU_TABLE,
     PAPER_MASS,
-    S,
     STRETCH_DAMP,
     STRETCH_K,
     STRETCH_MAX,
     THICK,
     Z0,
+    S,
 )
 from .geometry import _triangles
-from shapely.geometry import Point
 
 
 def _prism(tri, O, thick=None):
@@ -141,7 +141,7 @@ def generate_xml(pat, creases, name="origami_free", coll_thick=None):
 
         for c in children[i]:
             emit(c, depth + 1)
-        body_lines.append(f'{ind}</body>')
+        body_lines.append(f"{ind}</body>")
 
     emit(pat.root, 0)
 

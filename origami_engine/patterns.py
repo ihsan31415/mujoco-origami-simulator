@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import numpy as np
-
 from .constants import M, V
 from .serialization import load_creases_from_json
 from .types import Crease

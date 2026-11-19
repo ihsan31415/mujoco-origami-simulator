@@ -13,7 +13,6 @@ from origami_engine.evaluation import evaluate_individual, evaluate_population
 from origami_engine.patterns import DEFAULT_PATTERN_JSON, reference_miura_legacy_creases
 from origami_engine.simulation import load_creases_from_json
 
-
 DEFAULT_CREASE_JSON = DEFAULT_PATTERN_JSON
 
 

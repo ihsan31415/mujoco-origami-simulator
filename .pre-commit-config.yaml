@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.9
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.14.1
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - jsonschema>=4.18
+          - mujoco>=2.3
+          - numpy>=1.24
+          - shapely>=2.0
+          - imageio>=2.34
+        args: [--config-file=pyproject.toml]
+        files: ^origami_engine/

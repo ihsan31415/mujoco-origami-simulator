@@ -1,5 +1,7 @@
 # MuJoCo Origami Simulator
 
+[![CI](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml/badge.svg)](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml)
+
 This project is a Python-based origami folding simulator built around MuJoCo. It reconstructs a crease pattern from 2D line segments, validates the paper topology, generates a MuJoCo model for the folded sheet, applies fold-angle targets, and optionally vibrates the support table to simulate a realistic folding environment. The code is structured as an engineering pipeline rather than a pure toy example: crease patterns are normalized into a canonical format, polygon faces are built from the sheet layout, MuJoCo XML is generated from the resulting pattern, and the net displacement of the paper is measured as a forward-folding fitness signal.
 
 ## What this project does
@@ -179,9 +181,8 @@ from origami_engine.simulation import Crease
 crease_sequence = [
     # Crease 1: Mountain Fold (-90 degrees in radians)
     Crease(p1=(0.0, 0.5), p2=(0.5, 0.5), angle=-np.pi / 2),
-    
     # Crease 2: Valley Fold (+90 degrees in radians)
-    Crease(p1=(0.5, 0.5), p2=(1.0, 0.5), angle=np.pi / 2)
+    Crease(p1=(0.5, 0.5), p2=(1.0, 0.5), angle=np.pi / 2),
 ]
 ```
 

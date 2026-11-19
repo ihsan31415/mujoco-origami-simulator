@@ -1,7 +1,6 @@
 import json
 import math
 
-import numpy as np
 import pytest
 
 from origami_engine import (
@@ -11,7 +10,6 @@ from origami_engine import (
     evaluate_individual,
     evaluate_population,
     load_creases_from_json,
-    normalize_creases,
     reference_miura_legacy_creases,
     save_creases_to_json,
 )
@@ -76,7 +74,7 @@ def test_population_evaluation_keeps_order_and_supports_sequential_fallback():
 
 def test_invalid_crease_shape_is_rejected():
     with pytest.raises(ValueError):
-        evaluate_individual([{'not': 'a crease'}], duration=0.5, trajectory=(1.0, 0.0, 0.0))
+        evaluate_individual([{"not": "a crease"}], duration=0.5, trajectory=(1.0, 0.0, 0.0))
 
 
 def test_json_loader_round_trip(tmp_path):
@@ -112,11 +110,7 @@ def test_invalid_pattern_raises():
 
 def test_invalid_json_schema_raises(tmp_path):
     out = tmp_path / "bad.json"
-    out.write_text(
-        json.dumps(
-            {"angle_unit": "degree", "creases": [{"p1": [0.0, 0.0], "p2": [0.5, 0.5]}]}
-        )
-    )
+    out.write_text(json.dumps({"angle_unit": "degree", "creases": [{"p1": [0.0, 0.0], "p2": [0.5, 0.5]}]}))
     with pytest.raises(ValueError, match="invalid crease JSON"):
         load_creases_from_json(out)
 

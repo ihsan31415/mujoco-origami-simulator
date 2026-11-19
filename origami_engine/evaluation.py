@@ -86,7 +86,7 @@ def evaluate_individual(
             "duration": float(duration),
             "trajectory": np.asarray(_as_trajectory_vector(trajectory), dtype=float),
             "n_faces": int(sim_result.pattern.n_faces),
-            "n_loops": int(len(sim_result.pattern.loop_edges or [])),
+            "n_loops": len(sim_result.pattern.loop_edges or []),
         }
     return float(displacement)
 
