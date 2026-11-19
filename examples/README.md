@@ -14,3 +14,4 @@ python examples/01_evaluate_reference.py
 | [`02_json_input.py`](02_json_input.py) | Save and load creases via JSON (`save_creases_to_json` / `load_creases_from_json`) |
 | [`03_inspect_pattern.py`](03_inspect_pattern.py) | Inspect the reconstructed face graph (faces, hinges, loop edges) |
 | [`04_evaluate_population.py`](04_evaluate_population.py) | Score a small population, optionally in parallel with `workers` |
+| [`05_plot_pattern.py`](05_plot_pattern.py) | Plot a crease pattern with `plot_pattern` (Mountain/Valley, face indices, 180° labels) |

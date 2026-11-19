@@ -30,6 +30,7 @@ from .patterns import (
     reference_miura_legacy_creases,
     reference_miura_render_creases,
 )
+from .plotting import plot_pattern
 from .serialization import CREASE_SCHEMA, load_creases_from_json, normalize_creases, save_creases_to_json
 from .types import Crease, Pattern, SimulationResult
 
@@ -61,6 +62,7 @@ __all__ = [
     "load_default_creases",
     "normalize_creases",
     "paper_centroid",
+    "plot_pattern",
     "reference_miura_legacy_creases",
     "reference_miura_render_creases",
     "run_simulation",

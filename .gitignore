@@ -216,6 +216,9 @@ individual_simulation.mp4
 # Extracted experimental notebooks (see experiments/TIMELINE.md)
 experiments/notebooks/
 
+# Generated example plots (the committed reference lives in docs/)
+examples/*.png
+
 # PyPI configuration file
 .pypirc
 

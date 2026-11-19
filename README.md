@@ -161,7 +161,37 @@ python examples/01_evaluate_reference.py
 python examples/02_json_input.py
 python examples/03_inspect_pattern.py
 python examples/04_evaluate_population.py
+python examples/05_plot_pattern.py
 ```
+
+
+## Crease pattern visualization
+
+View any crease pattern at a glance with `plot_pattern`:
+
+```python
+from origami_engine import build_pattern, load_default_creases, plot_pattern
+
+creases = load_default_creases()          # default reference pattern
+pat = build_pattern(creases)              # validate faces / edges
+plot_pattern(creases, pat)                # Mountain=red dashed, Valley=blue dash-dot
+```
+
+`plot_pattern` draws every crease between `0.0` and `1.0` on both axes, colours
+Mountain folds red dashed and Valley folds blue dash-dot, labels every crease
+with a fixed `180°`, centers a bold face number inside each polygon, and prints
+a title like ``"24 creases | 16 faces | 9 loop edges (valid)"``.
+
+Run the example script to open the figure interactively:
+
+```bash
+python examples/05_plot_pattern.py
+```
+
+A pre-rendered version of the default reference pattern is included in the
+repository at [`docs/crease_pattern_plot.png`](docs/crease_pattern_plot.png):
+
+![Crease pattern plot](docs/crease_pattern_plot.png)
 
 
 ## Experimental history
