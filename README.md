@@ -1,142 +1,241 @@
-# MuJoCo Origami Engine
+<h1 align="center">MuJoCo Origami Engine</h1>
 
-<p align="center">
-  <a href="https://github.com/ihsan31415/origami-engine/releases">
-    <img src="https://img.shields.io/github/v/release/ihsan31415/origami-engine?display_name=tag&logo=github" alt="Latest Release">
-  </a>
-  <a href="https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/ihsan31415/origami-engine/ci.yml/badge.svg" alt="CI">
-  </a>
-  <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11-blue?logo=python&logoColor=white" alt="Python">
-  </a>
-  <a href="https://mujoco.org/">
-    <img src="https://img.shields.io/badge/Physics-MuJoCo-blue" alt="MuJoCo">
-  </a>
-  <a href="https://numpy.org/">
-    <img src="https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?logo=numpy&logoColor=white" alt="NumPy">
-  </a>
-  <a href="https://shapely.readthedocs.io/">
-    <img src="https://img.shields.io/badge/Geometry-Shapely-3776AB" alt="Shapely">
-  </a>
+<div align="center">
+  <a href="https://github.com/ihsan31415/origami-engine/releases"><img src="https://img.shields.io/github/v/release/ihsan31415/origami-engine?display_name=tag&logo=github" alt="Latest Release"></a>
+  <a href="https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml"><img src="https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11-blue?logo=python&logoColor=white" alt="Python"></a>
+  <a href="https://mujoco.org/"><img src="https://img.shields.io/badge/Physics-MuJoCo-blue" alt="MuJoCo"></a>
+  <a href="https://numpy.org/"><img src="https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?logo=numpy&logoColor=white" alt="NumPy"></a>
+  <a href="https://shapely.readthedocs.io/"><img src="https://img.shields.io/badge/Geometry-Shapely-3776AB" alt="Shapely"></a>
   <br>
-  <a href="https://github.com/python/mypy">
-    <img src="https://img.shields.io/badge/Type%20Checking-mypy-blue?logo=python&logoColor=white" alt="mypy">
-  </a>
-  <a href="https://github.com/astral-sh/ruff">
-    <img src="https://img.shields.io/badge/Code%20Style-Ruff-D7FF64?logo=ruff&logoColor=black" alt="Ruff">
-  </a>
-  <a href="https://docs.pytest.org/">
-    <img src="https://img.shields.io/badge/Tests-pytest-0A9EDC?logo=pytest&logoColor=white" alt="pytest">
-  </a>
-  <a href="https://github.com/pre-commit/pre-commit">
-    <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white" alt="pre-commit">
-  </a>
-  <a href="https://github.com/ihsan31415/origami-engine/commits/main">
-    <img src="https://img.shields.io/github/last-commit/ihsan31415/origami-engine" alt="Last Commit">
-  </a>
-  <a href="https://github.com/ihsan31415/origami-engine/issues">
-    <img src="https://img.shields.io/github/issues/ihsan31415/origami-engine" alt="Issues">
-  </a>
-  <a href="https://github.com/ihsan31415/origami-engine/stargazers">
-    <img src="https://img.shields.io/github/stars/ihsan31415/origami-engine" alt="Stars">
-  </a>
-  <a href="https://github.com/ihsan31415/origami-engine/LICENSE">
-    <img src="https://img.shields.io/github/license/ihsan31415/origami-engine" alt="License">
-  </a>
-</p>
+  <a href="https://github.com/python/mypy"><img src="https://img.shields.io/badge/Type%20Checking-mypy-blue?logo=python&logoColor=white" alt="mypy"></a>
+  <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/badge/Code%20Style-Ruff-D7FF64?logo=ruff&logoColor=black" alt="Ruff"></a>
+  <a href="https://docs.pytest.org/"><img src="https://img.shields.io/badge/Tests-pytest-0A9EDC?logo=pytest&logoColor=white" alt="pytest"></a>
+  <a href="origami_engine/schemas/crease_pattern.schema.json"><img src="https://img.shields.io/badge/Validation-JSON%20Schema-green" alt="JSON Schema"></a>
+  <a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white" alt="pre-commit"></a>
+  <br>
+  <a href="https://github.com/ihsan31415/origami-engine/commits/main"><img src="https://img.shields.io/github/last-commit/ihsan31415/origami-engine" alt="Last Commit"></a>
+  <a href="https://github.com/ihsan31415/origami-engine/issues"><img src="https://img.shields.io/github/issues/ihsan31415/origami-engine" alt="Issues"></a>
+  <a href="https://github.com/ihsan31415/origami-engine/stargazers"><img src="https://img.shields.io/github/stars/ihsan31415/origami-engine" alt="Stars"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/ihsan31415/origami-engine" alt="License"></a>
+</div>
 
-## 🚀 Getting Started
+This project is a Python-based origami folding simulator built around MuJoCo. It reconstructs a crease pattern from 2D line segments, validates the paper topology, generates a MuJoCo model for the folded sheet, applies fold-angle targets, and optionally vibrates the support table to simulate a realistic folding environment. The code is structured as an engineering pipeline rather than a pure toy example: crease patterns are normalized into a canonical format, polygon faces are built from the sheet layout, MuJoCo XML is generated from the resulting pattern, and the net displacement of the paper is measured as a forward-folding fitness signal.
 
-### Installation
+## What this project does
+- Builds a crease network from `p1`, `p2`, and `angle` data
+- Verifies that the crease graph tiles the square sheet without invalid sliver faces
+- Creates a MuJoCo model from the pattern geometry and hinge constraints
+- Drives fold actuators toward target fold angles during simulation
+- Applies a small support-table vibration for dynamic motion
+- Measures the forward displacement of the paper centroid
+- Exports the rendered motion to video for inspection
 
+## Simulation Output
+Below is the physical rendering of the simulation output, demonstrating how the paper layout reacts to active hinge joint torques and support table vibrations:
+
+<table>
+  <tr>
+    <th>Vibrating Table: Amplitude & Frequency</th>
+    <th>Fold Crease</th>
+    <th>Video Preview</th>
+  </tr>
+  <tr>
+    <td><strong>Lower</strong> amplitude & frequency</td>
+    <td>Partial / standard</td>
+    <td>
+      <video src="https://github.com/user-attachments/assets/15ff98b3-7a72-46c2-9303-e106c88bc71a"
+             width="280" controls muted playsinline></video>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>High</strong> amplitude & frequency</td>
+    <td>Full</td>
+    <td>
+      <video src="https://github.com/user-attachments/assets/ef7d9808-d0a5-4c6b-b33c-2c6a81e11003"
+             width="280" controls muted playsinline></video>
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Higher</strong> amplitude & frequency</td>
+    <td>Full</td>
+    <td>
+      <video src="https://github.com/user-attachments/assets/438714c1-f831-43cb-a729-027816fb3ea5"
+             width="280" controls muted playsinline></video>
+    </td>
+  </tr>
+</table>
+
+
+## Core modules
+- `origami_engine/constants.py` — shared physical/solver constants
+- `origami_engine/types.py` — `Crease`, `Pattern`, `SimulationResult` domain types
+- `origami_engine/geometry.py` — crease graph / face reconstruction (`build_pattern`)
+- `origami_engine/model.py` — MuJoCo XML generation (`generate_xml`)
+- `origami_engine/dynamics.py` — simulation loop, table vibration, centroids (`run_simulation`, `drive_table`, `paper_centroid`)
+- `origami_engine/serialization.py` — crease normalization and JSON I/O (validated against the packaged JSON Schema via `jsonschema`)
+- `origami_engine/evaluation.py` — fitness-oriented APIs (`evaluate_individual`, `evaluate_population`)
+- `origami_engine/patterns.py` — reusable reference crease patterns
+- `origami_engine/simulation.py` — backward-compatible facade
+- `origami_engine/render_individual.py` — script for rendering a single pattern to an MP4/video report
+- `origami_engine/example.py` — minimal evaluation workflow
+- `tests/test_evaluation.py` — regression checks for evaluation, input validation, and JSON I/O
+
+## Project layout
+```text
+.
+├── origami_engine/
+│   ├── __init__.py
+│   ├── backend.py
+│   ├── constants.py
+│   ├── types.py
+│   ├── geometry.py
+│   ├── model.py
+│   ├── dynamics.py
+│   ├── serialization.py
+│   ├── schemas/
+│   │   └── crease_pattern.schema.json
+│   ├── evaluation.py
+│   ├── patterns.py
+│   ├── simulation.py       # facade for backward-compatible imports
+│   ├── render_individual.py
+│   └── example.py
+├── examples/
+│   ├── README.md
+│   ├── 01_evaluate_reference.py
+│   ├── 02_json_input.py
+│   ├── 03_inspect_pattern.py
+│   └── 04_evaluate_population.py
+├── crease_patterns/
+│   └── reference_miura_4x4.json
+├── experiments/
+│   ├── TIMELINE.md
+│   └── prototype_notebooks.zip
+├── tests/
+│   └── test_evaluation.py
+├── .github/workflows/ci.yml
+├── ARCHITECTURE.md
+├── individual_simulation.mp4
+├── pyproject.toml
+└── README.md
+```
+
+## Requirements
+Runtime dependencies are declared in `pyproject.toml` (MuJoCo, NumPy, Shapely, imageio, jsonschema) and installed with:
 ```bash
-git clone https://github.com/ihsan31415/origami-engine.git
-cd origami-engine
+pip install -e ".[dev]"
+```
+which also adds `pytest` for running the test suite. The package is importable as `origami_engine` after installation.
+
+## Quick start
+Create a virtual environment and install the package with development dependencies, then run the validation or rendering scripts.
+```bash
 python -m venv .venv
 . .venv/bin/activate
 pip install -e ".[dev]"
+python -m pytest -q tests
+python origami_engine/render_individual.py
 ```
 
-### Quick start
-
-```python
-from origami_engine import load_default_creases, build_pattern, plot_pattern
-
-creases = load_default_creases()
-pat = build_pattern(creases)
-plot_pattern(creases, pat)
-```
-
-See the [Examples](##examples) section for more usage snippets.
-
----
-
-## 📦 As a Library
-
-This project is structured as a **library** for crease pattern simulation and analysis. Core modules live under `origami_engine/`:
-
-| Module | What it does |
-|---|---|
-| `origami_engine/types.py` | Domain types: `Crease`, `Pattern`, `SimulationResult` |
-| `origami_engine/geometry.py` | Reconstruct faces and hinge graph from creases (`build_pattern`) |
-| `origami_engine/model.py` | Generate MuJoCo XML from a validated `Pattern` |
-| `origami_engine/dynamics.py` | Run simulation, table vibration, compute centroids |
-| `origami_engine/evaluation.py` | Fitness APIs: `evaluate_individual()`, `evaluate_population()` |
-| `origami_engine/plotting.py` | `plot_pattern()` — reference-style crease pattern visualization |
-| `origami_engine/simulation.py` | Facade: high-level `run_simulation()` |
-| `origami_engine/serialization.py` | Crease JSON I/O, schema validation, normalization |
-
-### Core usage
-
-```python
-from origami_engine import (
-    Crease,
-    Pattern,
-    build_pattern,
-    generate_xml,
-    run_simulation,
-    evaluate_individual,
-    evaluate_population,
-    plot_pattern,
-    load_default_creases,
-    load_creases_from_json,
-    save_creases_to_json,
-)
-```
-
----
-
-## 📦 Installation
+## Library API
 
 ```bash
 pip install -e ".[dev]"
+
+python -c "
+from origami_engine import (
+    CREASE_SCHEMA,
+    Crease,
+    build_pattern,
+    evaluate_individual,
+    evaluate_population,
+    load_creases_from_json,
+    normalize_creases,
+    reference_miura_legacy_creases,
+    save_creases_to_json,
+    run_simulation,
+    paper_centroid,
+)
+"
 ```
 
-Also installable from PyPI:
+A machine‑readable JSON Schema describing the crease input format is included at
+`origami_engine/schemas/crease_pattern.schema.json`. It is used by
+`load_creases_from_json` to validate files at load time (invalid files raise
+`ValueError`), and is also exposed as `origami_engine.CREASE_SCHEMA` for
+validation in your own tools before calling the library.
 
-```bash
-pip install origami-engine
+## API Reference
+
+### Domain types
+
+| Export | Description |
+|---|---|
+| `Crease` | A single crease segment with `p1`, `p2` (2D points) and `angle` (radians). Negative = Mountain, positive = Valley. |
+| `Pattern` | Validated face/edge graph from `build_pattern()`. Contains `faces`, `edges`, `loop_edges`, `valid`, `reason`, `n_faces`, `n_loops`. |
+| `SimulationResult` | Result of `run_simulation()`: `model`, `data`, `pattern`, `info`, centroids. |
+| `CREASE_SCHEMA` | JSON Schema for validating crease input files. |
+
+### Pattern construction
+
+| Export | Description |
+|---|---|
+| `build_pattern(creases)` | Reconstruct polygonal faces and the spanning-tree hinge graph from a crease list. Returns a `Pattern`. |
+| `load_default_creases()` | Load the default reference crease pattern from JSON, with fallback to the built-in Miura-ori. |
+| `load_creases_from_json(path)` | Load and validate creases from a JSON file. |
+| `save_creases_to_json(creases, path)` | Save creases to a JSON file. |
+| `normalize_creases(creases)` | Normalize raw crease inputs (dicts or `Crease` objects) into `Crease` instances. |
+| `reference_miura_legacy_creases()` | Legacy Miura-ori crease list. |
+| `reference_miura_render_creases()` | Render-tuned Miura-ori crease list. |
+
+### Simulation
+
+| Export | Description |
+|---|---|
+| `run_simulation(creases, ...)` | Run a MuJoCo simulation from creases and return a `SimulationResult`. |
+| `generate_xml(pattern)` | Generate MuJoCo XML from a validated `Pattern`. |
+| `drive_table(...)` | Apply support-table vibration during simulation. |
+| `paper_centroid(data)` | Compute the paper centroid from MuJoCo data. |
+
+### Evaluation
+
+| Export | Description |
+|---|---|
+| `evaluate_individual(creases, ...)` | Score a single crease pattern via forward displacement. |
+| `evaluate_population(creases_list, ...)` | Score a population of crease patterns, optionally in parallel. |
+| `compute_forward_displacement(...)` | Compute forward displacement from simulation data. |
+
+### Visualization
+
+| Export | Description |
+|---|---|
+| `plot_pattern(creases, pat=None)` | Plot a crease pattern: Mountain=crimson dashed, Valley=blue dash-dot, degree labels, face indices, loop-edge markers, legend. |
+
+### Constants
+
+| Export | Description |
+|---|---|
+| `S` | Sheet size (1.0). |
+| `M`, `V` | Canonical Mountain (negative) and Valley (positive) fold angles (±45°). |
+| `MAX_FOLD`, `MIN_FACE_AREA`, `KP`, `KV`, ... | Physical and solver constants. |
+
+### Example: complete workflow
+
+```python
+from origami_engine import load_default_creases, build_pattern, plot_pattern, run_simulation
+
+creases = load_default_creases()
+pat = build_pattern(creases)
+
+# Visualize
+plot_pattern(creases, pat)
+
+# Simulate
+result = run_simulation(creases, duration=8.0)
+print(result.info["n_faces"], "faces simulated")
 ```
 
----
-
-## 📦 Latest Release
-
-See the [GitHub Releases](https://github.com/ihsan31415/origami-engine/releases/latest) page for the most recent version, changelog, and assets.
-
----
-
-## 📚 Documentation
-
-- [Architecture](ARCHITECTURE.md) — module overview, data flow, design decisions
-- [Changelog](CHANGELOG.md) — version history
-- [Experimental history](experiments/TIMELINE.md) — archived Jupyter notebooks
-- [Crease pattern visualization](##-crease-pattern-visualization) — `plot_pattern` reference
-
----
-
-## 🔍 Examples
+## Examples
 
 Runnable usage snippets live in the [`examples/`](examples/README.md) folder:
 
@@ -148,9 +247,8 @@ python examples/04_evaluate_population.py
 python examples/05_plot_pattern.py
 ```
 
----
 
-## 🔍 Crease pattern visualization
+## Crease pattern visualization
 
 View any crease pattern at a glance with `plot_pattern`:
 
@@ -183,81 +281,7 @@ repository at [`docs/crease_pattern_plot.png`](docs/crease_pattern_plot.png):
 
 <p align="center"><sub>Default reference crease pattern — 24 creases | 16 faces | 9 loop edges</sub></p>
 
----
-
-## 🔍 Example crease input
-
-Crease data is represented as a list of line segments with a start point, end point, and target fold angle. Target angles dictate whether a joint behaves as a **Mountain fold** (negative radians) or a **Valley fold** (positive radians).
-
-```python
-from origami_engine.simulation import Crease
-
-creases = [
-    Crease((0.2, 0.0), (0.45, 0.25), -0.7853981633974483),
-    Crease((0.45, 0.25), (0.2, 0.5), -0.7853981633974483),
-]
-```
-
-### Explicit Mountain-Valley Fold Pairing
-
-Here is an explicit example of a 90-degree Mountain-Valley fold sequence along a shared crease node to create a standard V-shape:
-
-```python
-import numpy as np
-from origami_engine.simulation import Crease
-
-crease_sequence = [
-    # Crease 1: Mountain Fold (-90 degrees in radians)
-    Crease(p1=(0.0, 0.5), p2=(0.5, 0.5), angle=-np.pi / 2),
-    # Crease 2: Valley Fold (+90 degrees in radians)
-    Crease(p1=(0.5, 0.5), p2=(1.0, 0.5), angle=np.pi / 2),
-]
-```
-
-The project also supports JSON input with the following schema:
-
-```json
-{
-  "angle_unit": "degree",
-  "creases": [
-    { "p1": [0.0, 0.5], "p2": [0.5, 0.5], "angle": -90.0 },
-    { "p1": [0.5, 0.5], "p2": [1.0, 0.5], "angle": 90.0 }
-  ]
-}
-```
-
----
-
-## 📊 Evaluation workflow
-
-The project exposes a small evaluation API over the MuJoCo simulation:
-
-```python
-from origami_engine.evaluation import evaluate_individual
-
-score = evaluate_individual(
-    creases,
-    duration=8.0,
-    trajectory=(1.0, 0.0, 0.0),
-    fold_duration=3.0,
-)
-print(score)
-```
-
-This returns the forward displacement of the paper centroid relative to the requested trajectory direction, measured after the simulated folding run.
-
----
-
-## 📦 Package data
-
-- `schemas/*.json` — JSON Schema for crease input validation
-- `docs/crease_pattern_plot.png` — pre-rendered reference plot
-- `examples/` — runnable usage snippets
-- `experiments/` — archived prototyping notebooks (`TIMELINE.md` + `prototype_notebooks.zip`)
-
----
-
-## 👥 Experimental history
+## Experimental history
 
 This repository also preserves the **experimental stage** of the simulator before it was modularized into `origami_engine/`. These are the historical Jupyter notebooks (not part of the runtime package) that were used to develop the fold physics:
 
@@ -273,26 +297,58 @@ pip install jupyter
 jupyter notebook experiments/notebooks
 ```
 
----
+## Example crease input
+Crease data is represented as a list of line segments with a start point, end point, and target fold angle. Target angles dictate whether a joint behaves as a **Mountain fold** (negative radians) or a **Valley fold** (positive radians).
 
-## 📄 License
+```python
+from origami_engine.simulation import Crease
 
-Distributed under the [Apache License 2.0](LICENSE).
-
----
-
-## 🤝 Citation
-
-If you use this work in research, please cite:
-
-```
-MuJoCo Origami Engine (origami-engine). 
-GitHub repository: https://github.com/ihsan31415/origami-engine
+creases = [
+    Crease((0.2, 0.0), (0.45, 0.25), -0.7853981633974483),
+    Crease((0.45, 0.25), (0.2, 0.5), -0.7853981633974483),
+]
 ```
 
----
+### Explicit Mountain-Valley Fold Pairing
+Here is an explicit example of a 90-degree Mountain-Valley fold sequence along a shared crease node to create a standard V-shape:
 
-## 📬 Contact
+```python
+import numpy as np
+from origami_engine.simulation import Crease
 
-- GitHub: [https://github.com/ihsan31415/origami-engine](https://github.com/ihsan31415/origami-engine)
-- Author: ihsan <ihsanmuhammadkhoirul@students.unnes.ac.id>
+crease_sequence = [
+    # Crease 1: Mountain Fold (-90 degrees in radians)
+    Crease(p1=(0.0, 0.5), p2=(0.5, 0.5), angle=-np.pi / 2),
+    # Crease 2: Valley Fold (+90 degrees in radians)
+    Crease(p1=(0.5, 0.5), p2=(1.0, 0.5), angle=np.pi / 2),
+]
+```
+
+The project also supports JSON input with the following schema:
+```json
+{
+  "angle_unit": "degree",
+  "creases": [
+    { "p1": [0.0, 0.5], "p2": [0.5, 0.5], "angle": -90.0 },
+    { "p1": [0.5, 0.5], "p2": [1.0, 0.5], "angle": 90.0 }
+  ]
+}
+```
+
+## Evaluation workflow
+The project exposes a small evaluation API over the MuJoCo simulation:
+```python
+from origami_engine.evaluation import evaluate_individual
+
+score = evaluate_individual(
+    creases,
+    duration=8.0,
+    trajectory=(1.0, 0.0, 0.0),
+    fold_duration=3.0,
+)
+print(score)
+```
+This returns the forward displacement of the paper centroid relative to the requested trajectory direction, measured after the simulated folding run.
+
+## Notes
+The simulator is built around real paper topology and MuJoCo dynamics. It is not just a geometric crease renderer; it creates a physical model that can be evaluated and visualized under controlled fold and vibration conditions. For implementation details and module responsibilities, see [ARCHITECTURE.md](ARCHITECTURE.md).
