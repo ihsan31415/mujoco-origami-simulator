@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml/badge.svg)](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-red.svg)](LICENSE)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![Made with MuJoCo](https://img.shields.io/badge/MuJoCo-physics%20engine-orange.svg)](https://mujoco.org/)
