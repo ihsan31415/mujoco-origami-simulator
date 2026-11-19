@@ -1,6 +1,11 @@
 # MuJoCo Origami Simulator
 
 [![CI](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml/badge.svg)](https://github.com/ihsan31415/mujoco-origami-simulator/actions/workflows/ci.yml)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Made with MuJoCo](https://img.shields.io/badge/MuJoCo-physics%20engine-orange.svg)](https://mujoco.org/)
 
 This project is a Python-based origami folding simulator built around MuJoCo. It reconstructs a crease pattern from 2D line segments, validates the paper topology, generates a MuJoCo model for the folded sheet, applies fold-angle targets, and optionally vibrates the support table to simulate a realistic folding environment. The code is structured as an engineering pipeline rather than a pure toy example: crease patterns are normalized into a canonical format, polygon faces are built from the sheet layout, MuJoCo XML is generated from the resulting pattern, and the net displacement of the paper is measured as a forward-folding fitness signal.
 
