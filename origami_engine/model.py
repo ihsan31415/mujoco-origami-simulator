@@ -3,6 +3,7 @@ from __future__ import annotations
 """MuJoCo XML generation from a validated crease pattern."""
 
 import numpy as np
+from shapely.geometry import Point
 
 from .backend import require_mujoco
 from .constants import (
@@ -16,15 +17,14 @@ from .constants import (
     MU_PAPER,
     MU_TABLE,
     PAPER_MASS,
-    S,
     STRETCH_DAMP,
     STRETCH_K,
     STRETCH_MAX,
     THICK,
     Z0,
+    S,
 )
 from .geometry import _triangles
-from shapely.geometry import Point
 
 
 def _prism(tri, O, thick=None):
@@ -92,12 +92,12 @@ def generate_xml(pat, creases, name="origami_free", coll_thick=None):
             ang = creases[e["crease"]].angle if e["crease"] >= 0 else 0.0
             h = len(hinges)
             hinges.append(
-                dict(
-                    name=f"crease_{h}",
-                    face=i,
-                    edge=pat.tree_edge[i],
-                    target=float(np.clip(sgn * ang, -MAX_FOLD, MAX_FOLD)),
-                )
+                {
+                    "name": f"crease_{h}",
+                    "face": i,
+                    "edge": pat.tree_edge[i],
+                    "target": float(np.clip(sgn * ang, -MAX_FOLD, MAX_FOLD)),
+                }
             )
             for tag, ax_ in (("a", a), ("n", nl)):
                 body_lines.append(
@@ -141,7 +141,7 @@ def generate_xml(pat, creases, name="origami_free", coll_thick=None):
 
         for c in children[i]:
             emit(c, depth + 1)
-        body_lines.append(f'{ind}</body>')
+        body_lines.append(f"{ind}</body>")
 
     emit(pat.root, 0)
 
@@ -196,13 +196,13 @@ def generate_xml(pat, creases, name="origami_free", coll_thick=None):
     </actuator>
 </mujoco>'''
 
-    info = dict(
-        hinges=hinges,
-        targets=np.array([h["target"] for h in hinges]),
-        n_faces=n,
-        n_hinges=len(hinges),
-        n_loops=len(pat.loop_edges),
-    )
+    info = {
+        "hinges": hinges,
+        "targets": np.array([h["target"] for h in hinges]),
+        "n_faces": n,
+        "n_hinges": len(hinges),
+        "n_loops": len(pat.loop_edges),
+    }
     return xml, info
 
 

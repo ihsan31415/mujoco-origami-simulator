@@ -99,7 +99,7 @@ def normalize_creases(creases):
     if isinstance(creases, (str, Path)):
         return load_creases_from_json(creases)
     if not isinstance(creases, (list, tuple)):
-        raise ValueError("creases must be a list or tuple of Crease objects.")
+        raise TypeError("creases must be a list or tuple of Crease objects.")
     if len(creases) == 0:
         raise ValueError("creases must contain at least one crease.")
 

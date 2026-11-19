@@ -213,6 +213,9 @@ render_report.json
 render_report.md
 individual_simulation.mp4
 
+# Extracted experimental notebooks (see experiments/TIMELINE.md)
+experiments/notebooks/
+
 # PyPI configuration file
 .pypirc
 

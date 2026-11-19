@@ -6,13 +6,12 @@ Keeping the optional import in one place lets geometry and I/O modules be
 imported (and unit-tested) without MuJoCo installed.
 """
 
+MUJOCO_IMPORT_ERROR: BaseException | None = None
 try:
     import mujoco
-except Exception as exc:  # pragma: no cover - import-time guard for clarity
+except Exception as exc:  # noqa: BLE001 - broad catch intentional for import guard
     mujoco = None
     MUJOCO_IMPORT_ERROR = exc
-else:
-    MUJOCO_IMPORT_ERROR = None
 
 
 def require_mujoco(message: str = "MuJoCo is required for this operation."):

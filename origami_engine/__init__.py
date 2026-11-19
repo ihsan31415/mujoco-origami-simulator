@@ -10,15 +10,15 @@ Public entry points are grouped into:
 
 from .constants import (
     MAX_FOLD,
-    M,
     PAPER_MASS,
-    S,
     THICK,
-    V,
     VIB_AMP_X,
     VIB_AMP_Z,
     VIB_FREQ,
     Z0,
+    M,
+    S,
+    V,
 )
 from .dynamics import drive_table, paper_centroid, run_simulation
 from .evaluation import compute_forward_displacement, evaluate_individual, evaluate_population
@@ -36,21 +36,21 @@ from .types import Crease, Pattern, SimulationResult
 __version__ = "0.1.0"
 
 __all__ = [
-    "DEFAULT_PATTERN_JSON",
     "CREASE_SCHEMA",
-    "Crease",
-    "Pattern",
-    "SimulationResult",
+    "DEFAULT_PATTERN_JSON",
     "MAX_FOLD",
-    "M",
     "PAPER_MASS",
-    "S",
     "THICK",
-    "V",
     "VIB_AMP_X",
     "VIB_AMP_Z",
     "VIB_FREQ",
     "Z0",
+    "Crease",
+    "M",
+    "Pattern",
+    "S",
+    "SimulationResult",
+    "V",
     "build_pattern",
     "compute_forward_displacement",
     "drive_table",
@@ -61,8 +61,8 @@ __all__ = [
     "load_default_creases",
     "normalize_creases",
     "paper_centroid",
-    "run_simulation",
-    "save_creases_to_json",
     "reference_miura_legacy_creases",
     "reference_miura_render_creases",
+    "run_simulation",
+    "save_creases_to_json",
 ]

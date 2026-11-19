@@ -22,9 +22,7 @@ def _straight_pieces(g):
     for part in _parts(linemerge(lines)):
         c = list(part.simplify(1e-9).coords)
         out += [
-            (c[i], c[i + 1])
-            for i in range(len(c) - 1)
-            if np.hypot(c[i + 1][0] - c[i][0], c[i + 1][1] - c[i][1]) > 1e-6
+            (c[i], c[i + 1]) for i in range(len(c) - 1) if np.hypot(c[i + 1][0] - c[i][0], c[i + 1][1] - c[i][1]) > 1e-6
         ]
     return out
 
@@ -98,10 +96,7 @@ def build_pattern(creases):
 
 
 def _tri_area(t):
-    return 0.5 * abs(
-        (t[1][0] - t[0][0]) * (t[2][1] - t[0][1])
-        - (t[2][0] - t[0][0]) * (t[1][1] - t[0][1])
-    )
+    return 0.5 * abs((t[1][0] - t[0][0]) * (t[2][1] - t[0][1]) - (t[2][0] - t[0][0]) * (t[1][1] - t[0][1]))
 
 
 def _triangles(poly):
@@ -112,17 +107,12 @@ def _triangles(poly):
         try:
             import shapely
 
-            tris = [
-                np.array(t.exterior.coords)[:3]
-                for t in shapely.constrained_delaunay_triangles(poly).geoms
-            ]
-        except Exception:
+            tris = [np.array(t.exterior.coords)[:3] for t in shapely.constrained_delaunay_triangles(poly).geoms]
+        except Exception:  # noqa: BLE001 - broad catch intentional for Delaunay fallback
             from shapely.ops import triangulate
 
             tris = [
-                np.array(t.exterior.coords)[:3]
-                for t in triangulate(poly)
-                if poly.contains(t.representative_point())
+                np.array(t.exterior.coords)[:3] for t in triangulate(poly) if poly.contains(t.representative_point())
             ]
     return [np.asarray(t) for t in tris if _tri_area(t) > 1e-7]
 

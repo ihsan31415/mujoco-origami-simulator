@@ -11,8 +11,8 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 import imageio
-import numpy as np
 import mujoco
+import numpy as np
 
 from origami_engine.patterns import DEFAULT_PATTERN_JSON, reference_miura_render_creases
 from origami_engine.simulation import (
@@ -27,13 +27,21 @@ from origami_engine.simulation import (
     paper_centroid,
 )
 
-
 OUTPUT_VIDEO = PROJECT_ROOT / "individual_simulation.mp4"
 OUTPUT_REPORT = PROJECT_ROOT / "render_report.json"
 
 
-
-def trace_simulation(creases, duration=2.0, fold_duration=3.0, fps=24, trajectory=(1.0, 0.0, 0.0), vibrate=True, amp_x=VIB_AMP_X, amp_z=VIB_AMP_Z, freq_hz=VIB_FREQ):
+def trace_simulation(
+    creases,
+    duration=2.0,
+    fold_duration=3.0,
+    fps=24,
+    trajectory=(1.0, 0.0, 0.0),
+    vibrate=True,
+    amp_x=VIB_AMP_X,
+    amp_z=VIB_AMP_Z,
+    freq_hz=VIB_FREQ,
+):
     creases = normalize_creases(creases)
     pat = build_pattern(creases)
     if not pat.valid:
@@ -96,12 +104,14 @@ def export_video(frames, output_path: Path, fps: int = 24):
     if not frames:
         raise ValueError("No frames were captured during the simulation.")
     try:
-        writer = imageio.get_writer(output_path, fps=fps, codec="libx264", format="FFMPEG", output_params=["-pix_fmt", "yuv420p"])
+        writer = imageio.get_writer(
+            output_path, fps=fps, codec="libx264", format="FFMPEG", output_params=["-pix_fmt", "yuv420p"]
+        )
         for frame in frames:
             writer.append_data(frame)
         writer.close()
         return True
-    except Exception:
+    except Exception:  # noqa: BLE001 - broad catch intentional for video fallback
         fallback = output_path.with_suffix(".gif")
         writer = imageio.get_writer(fallback, fps=fps)
         for frame in frames:
@@ -122,7 +132,9 @@ def main():
     duration = 20.0
     fold_duration = 0.000001
 
-    trace = trace_simulation(creases, duration=duration, fold_duration=fold_duration, trajectory=trajectory, vibrate=True)
+    trace = trace_simulation(
+        creases, duration=duration, fold_duration=fold_duration, trajectory=trajectory, vibrate=True
+    )
     displacement = trace["forward_displacement"]
 
     is_mp4 = export_video(trace["frames"], OUTPUT_VIDEO, fps=24)
