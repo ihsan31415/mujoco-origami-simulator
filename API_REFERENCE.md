@@ -1,6 +1,6 @@
 # API Reference — MuJoCo Origami Engine
 
-## Domain Types
+## Domain types
 
 | Export | Description |
 |---|---|
@@ -9,7 +9,7 @@
 | `SimulationResult` | Result of `run_simulation()`: `model`, `data`, `pattern`, `info`, centroids. |
 | `CREASE_SCHEMA` | JSON Schema for validating crease input files. |
 
-## Pattern Construction
+## Pattern construction
 
 | Export | Description |
 |---|---|
@@ -52,7 +52,7 @@
 | `M`, `V` | Canonical Mountain (negative) and Valley (positive) fold angles (±45°). |
 | `MAX_FOLD`, `MIN_FACE_AREA`, `KP`, `KV`, ... | Physical and solver constants. |
 
-## Example: Complete Workflow
+## Example: complete workflow
 
 ```python
 from origami_engine import load_default_creases, build_pattern, plot_pattern, run_simulation

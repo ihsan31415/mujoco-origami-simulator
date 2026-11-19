@@ -1,8 +1,7 @@
-# Getting Started — MuJoCo Origami Engine
+# 🚀 Getting Started
 
 ## Installation
 
-### As a Library (recommended)
 ```bash
 # Clone the repository
 git clone https://github.com/ihsan31415/origami-engine.git
@@ -16,13 +15,7 @@ python -m venv .venv
 pip install -e ".[dev]"
 ```
 
-### As a Script-Only Usage
-```bash
-# Minimal install without dev tools
-pip install origami-engine
-```
-
-## Quick Start — Library Usage
+## Quick start — Library usage
 
 ```python
 from origami_engine import (
@@ -38,27 +31,18 @@ from origami_engine import (
     run_simulation,
     paper_centroid,
 )
-```
 
-### Load a reference pattern
-```python
-creases = load_default_creases()  # or load_creases_from_json("path/to/file.json")
-```
+# Load a reference pattern
+creases = load_default_creases()
 
-### Build and validate the pattern
-```python
+# Build and validate the pattern
 pat = build_pattern(creases)
-# pat.valid == True if the crease graph tiles the sheet correctly
-```
 
-### Run a simulation
-```python
+# Run a simulation
 result = run_simulation(creases, duration=8.0)
 print(f"{result.info['n_faces']} faces simulated in {result.info['duration']}s")
-```
 
-### Evaluate fitness (forward displacement)
-```python
+# Evaluate fitness (forward displacement)
 score = evaluate_individual(
     creases,
     duration=8.0,
@@ -66,16 +50,14 @@ score = evaluate_individual(
     fold_duration=3.0,
 )
 print(f"Forward displacement: {score}")
-```
 
-### Plot the crease pattern
-```python
+# Plot the crease pattern
 from origami_engine import plot_pattern
 
 plot_pattern(creases, pat)
 ```
 
-## Quick Start — Script Usage
+## Quick start — Script usage
 
 ```bash
 # 1. Create venv and install
@@ -97,9 +79,7 @@ python examples/04_evaluate_population.py
 python examples/05_plot_pattern.py
 ```
 
-## Example Crease Input
-
-Crease data is represented as a list of line segments:
+## Example crease input
 
 ```python
 from origami_engine.simulation import Crease
@@ -111,21 +91,23 @@ creases = [
 ```
 
 ### Mountain-Valley Pairing Example
+
 ```python
 import numpy as np
 from origami_engine.simulation import Crease
 
 crease_sequence = [
-    # Crease 1: Mountain Fold (-90 degrees)
+    # Crease 1: Mountain Fold (-90 degrees in radians)
     Crease(p1=(0.0, 0.5), p2=(0.5, 0.5), angle=-np.pi / 2),
-    # Crease 2: Valley Fold (+90 degrees)
+    # Crease 2: Valley Fold (+90 degrees in radians)
     Crease(p1=(0.5, 0.5), p2=(1.0, 0.5), angle=np.pi / 2),
 ]
 ```
 
-## JSON Input Schema
+## JSON input schema
 
 Creases can be loaded from JSON following this schema:
+
 ```json
 {
   "angle_unit": "degree",
@@ -135,10 +117,3 @@ Creases can be loaded from JSON following this schema:
   ]
 }
 ```
-
-## What's Next?
-
-- Browse the [examples/](examples/) folder for runnable snippets
-- Check [ARCHITECTURE.md](ARCHITECTURE.md) for module details
-- See [API_REFERENCE.md](API_REFERENCE.md) for the full public API
-- View the [experimental history](experiments/TIMELINE.md) for prototyping notes
