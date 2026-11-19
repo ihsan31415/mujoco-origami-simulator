@@ -1,80 +1,33 @@
 """Crease-pattern plotting utilities.
 
-Produces reference-style line plots of crease patterns with:
-- Red dashed lines for Mountain folds (negative angles)
-- Blue dash-dot lines for Valley folds (positive angles)
-- Face numbers centered in each polygon
-- 180° labels on every crease
-- Legend, axis 0.0–1.0
-- Title with crease/face/loop counts
+Reference-style line plot of a crease pattern:
+
+- Background sheet rectangle (0,0)-(S,S), light gray fill, black edge
+- Mountain folds (angle < 0): crimson dashed lines
+- Valley folds (angle > 0): royal blue dash-dot lines
+- Each crease labelled with its fold angle in degrees at its midpoint
+- Face indices drawn in gray at each polygon's representative point
+- Loop edges marked with black "x" at their midpoints
+- Legend at lower centre; axes limited to [-0.05S, 1.05S] with equal aspect
+- Title: "{N} creases | {M} faces | {K} loop edges (x)"
 
 Supports two calling conventions:
 
 1. ``plot_pattern(creases)`` — plot from a raw crease list.
-2. ``plot_pattern(creases, pat)`` — plot from a :class:`~origami_engine.types.Pattern`
-   object (recommended, enables face indices and loop-edge counts in the title).
+2. ``plot_pattern(creases, pat)`` — plot from a validated :class:`Pattern`.
 """
 from __future__ import annotations
 
+import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib.lines import Line2D
+from matplotlib.patches import Rectangle
 
-from .types import Pattern
-
-
-def _is_mountain(angle: float) -> bool:
-    """Mountain folds have a negative signed angle in this package."""
-    return angle < 0
+from .constants import S
+from .types import Crease, Pattern
 
 
-def _is_valley(angle: float) -> bool:
-    """Valley folds have a positive signed angle in this package."""
-    return angle > 0
-
-
-def _plot_creases(ax, creases) -> None:
-    """Draw every crease on *ax*, coloured by fold type.
-
-    Mountain folds → red dashed, Valley folds → blue dash-dot, others → grey solid.
-    """
-    for cr in creases:
-        x0, y0 = cr.p1
-        x1, y1 = cr.p2
-        if _is_mountain(cr.angle):
-            ax.plot([x0, x1], [y0, y1], linestyle="--", color="red", linewidth=2)
-        elif _is_valley(cr.angle):
-            ax.plot([x0, x1], [y0, y1], linestyle="-.", color="blue", linewidth=2)
-        else:
-            ax.plot([x0, x1], [y0, y1], color="gray", linewidth=1)
-
-
-def _plot_face_numbers(ax, faces) -> None:
-    """Print the face index at the centroid of each polygon."""
-    for i, face in enumerate(faces):
-        cx, cy = face.centroid.xy
-        ax.text(cx[0], cy[0], str(i), ha="center", va="center", fontsize=10, color="black", weight="bold")
-
-
-def _plot_angle_labels(ax, creases) -> None:
-    """Print a fixed 180° label at the midpoint of every crease."""
-    for cr in creases:
-        x0, y0 = cr.p1
-        x1, y1 = cr.p2
-        mx, my = (x0 + x1) / 2.0, (y0 + y1) / 2.0
-        ax.text(mx, my, "180°", fontsize=7, ha="center", va="center", color="black")
-
-
-def _add_manual_legend(ax) -> None:
-    """Add a legend showing the Mountain / Valley line styles."""
-    from matplotlib.lines import Line2D
-
-    legend_handles = [
-        Line2D([0], [0], color="red", linestyle="--", linewidth=2, label="Mountain"),
-        Line2D([0], [0], color="blue", linestyle="-.", linewidth=2, label="Valley"),
-    ]
-    ax.legend(handles=legend_handles, loc="upper right", fontsize=9)
-
-
-def plot_pattern(creases, pat: Pattern | None = None) -> None:
+def plot_pattern(creases: list[Crease], pat: Pattern | None = None) -> None:
     """Plot a crease pattern.
 
     Parameters
@@ -84,63 +37,85 @@ def plot_pattern(creases, pat: Pattern | None = None) -> None:
         crease segments.
     pat:
         Optional :class:`~origami_engine.types.Pattern` object returned by
-        :func:`~origami_engine.geometry.build_pattern`.  If provided, the
-        plot title will include the face count, loop-edge count, and the
-        valid/invalid status, and face indices are drawn in each polygon.
+        :func:`~origami_engine.geometry.build_pattern`.  When provided and
+        valid, face indices and loop-edge markers are added to the axes and
+        the title includes the face/loop-edge counts.
 
     Returns
     -------
     None
-        The function displays the plot via ``plt.show()``.  To save the
-        figure, call ``plt.savefig`` before ``plt.show`` or close the
-        figure with ``plt.close``.
+        The figure is displayed with :func:`matplotlib.pyplot.show`.  Under a
+        non-interactive backend (e.g. Agg) ``show()`` does not block, so
+        callers can still grab the current figure via
+        :func:`matplotlib.pyplot.gcf` and save it to PNG.
 
     Notes
     -----
     The visual style matches the reference plot:
 
-    - **Mountain** folds → red dashed lines
-    - **Valley** folds → blue dash-dot lines
-    - Face numbers → centered in each polygon, rendered in bold black
-    - Crease labels → a fixed ``180°`` at each crease midpoint
-    - Axes → limits ``[0, 1]`` × ``[0, 1]``, equal aspect, axes hidden
-    - Legend → distinguishes Mountain vs. Valley
-    - Title → ``"{N} creases | {M} faces | {K} loop edges ({status})"`` when
-      *pat* is given, otherwise ``"{N} creases"``
-
-    Example
-    -------
-    >>> from origami_engine import load_default_creases, build_pattern, plot_pattern
-    >>> creases = load_default_creases()
-    >>> pat = build_pattern(creases)
-    >>> plot_pattern(creases, pat)  # doctest: +SKIP
+    - **Mountain** folds → crimson dashed lines
+    - **Valley** folds → royal blue dash-dot lines
+    - Crease labels → actual fold angle in degrees at each midpoint
+    - Face numbers → gray at each polygon's representative point
+    - Loop edges → black "x" at each edge midpoint
+    - Axes → limits [-0.05S, 1.05S] × [-0.05S, 1.05S], equal aspect
+    - Legend → Mountain / Valley at lower centre
+    - Title → ``"{N} creases | {M} faces | {K} loop edges (x)"`` when *pat*
+      is valid, otherwise ``"{N} creases [ | INVALID: reason]"``
     """
-    _fig, ax = plt.subplots(figsize=(8, 8))
+    _fig, ax = plt.subplots(figsize=(6, 6))
+    ax.add_patch(Rectangle((0, 0), S, S, fc="#f4f4f4", ec="k", lw=2))
 
-    # Draw crease lines and their 180° labels
-    _plot_creases(ax, creases)
-    _plot_angle_labels(ax, creases)
+    for c in creases:
+        valley = c.angle > 0
+        ax.plot(
+            [c.p1[0], c.p2[0]],
+            [c.p1[1], c.p2[1]],
+            color="royalblue" if valley else "crimson",
+            ls="-." if valley else "--",
+            lw=2.5,
+        )
+        m = ((c.p1[0] + c.p2[0]) / 2, (c.p1[1] + c.p2[1]) / 2)
+        ax.text(
+            m[0],
+            m[1],
+            f"{np.degrees(abs(c.angle)):.0f}°",
+            fontsize=8,
+            ha="center",
+            bbox={"fc": "white", "ec": "none", "alpha": 0.7, "pad": 1},
+        )
 
-    # Draw face numbers and build a title with counts if we have a Pattern
-    if pat is not None and pat.faces is not None:
-        _plot_face_numbers(ax, pat.faces)
+    title = f"{len(creases)} creases"
+    if pat is not None and pat.valid:
+        faces = pat.faces or []
+        edges = pat.edges or []
+        loop_edges = pat.loop_edges or []
+        for i, f in enumerate(faces):
+            p = f.representative_point()
+            ax.text(p.x, p.y, str(i), color="gray", ha="center", fontsize=9)
+        for k in loop_edges:
+            e = edges[k]
+            ax.plot(
+                (e["p"][0] + e["q"][0]) / 2,
+                (e["p"][1] + e["q"][1]) / 2,
+                "kx",
+                ms=9,
+            )
+        title += f" | {len(faces)} faces | {len(loop_edges)} loop edges (x)"
+    elif pat is not None:
+        title += f" | INVALID: {pat.reason}"
 
-        n_creases = len(creases)
-        n_faces = pat.n_faces if pat.n_faces else len(pat.faces)
-        n_loops = pat.n_loops if pat.n_loops else (len(pat.loop_edges) if pat.loop_edges else 0)
-        status = "valid" if pat.valid else "invalid"
-        ax.set_title(f"{n_creases} creases | {n_faces} faces | {n_loops} loop edges ({status})", fontsize=13)
-    else:
-        ax.set_title(f"{len(creases)} creases", fontsize=13)
-
-    # Axis formatting to match the reference 0.0–1.0 view
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
+    ax.legend(
+        handles=[
+            Line2D([], [], color="crimson", ls="--", label="Mountain"),
+            Line2D([], [], color="royalblue", ls="-.", label="Valley"),
+        ],
+        loc="lower center",
+        ncol=2,
+        bbox_to_anchor=(0.5, -0.12),
+    )
+    ax.set_xlim(-0.05 * S, 1.05 * S)
+    ax.set_ylim(-0.05 * S, 1.05 * S)
     ax.set_aspect("equal")
-    ax.axis("off")
-
-    # Add legend
-    _add_manual_legend(ax)
-
-    plt.tight_layout()
+    ax.set_title(title, fontsize=10)
     plt.show()
