@@ -108,7 +108,7 @@ def _triangles(poly):
             import shapely
 
             tris = [np.array(t.exterior.coords)[:3] for t in shapely.constrained_delaunay_triangles(poly).geoms]
-        except Exception:
+        except Exception:  # noqa: BLE001 - broad catch intentional for Delaunay fallback
             from shapely.ops import triangulate
 
             tris = [

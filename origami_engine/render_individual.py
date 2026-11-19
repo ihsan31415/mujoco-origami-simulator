@@ -111,7 +111,7 @@ def export_video(frames, output_path: Path, fps: int = 24):
             writer.append_data(frame)
         writer.close()
         return True
-    except Exception:
+    except Exception:  # noqa: BLE001 - broad catch intentional for video fallback
         fallback = output_path.with_suffix(".gif")
         writer = imageio.get_writer(fallback, fps=fps)
         for frame in frames:

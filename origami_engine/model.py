@@ -92,12 +92,12 @@ def generate_xml(pat, creases, name="origami_free", coll_thick=None):
             ang = creases[e["crease"]].angle if e["crease"] >= 0 else 0.0
             h = len(hinges)
             hinges.append(
-                dict(
-                    name=f"crease_{h}",
-                    face=i,
-                    edge=pat.tree_edge[i],
-                    target=float(np.clip(sgn * ang, -MAX_FOLD, MAX_FOLD)),
-                )
+                {
+                    "name": f"crease_{h}",
+                    "face": i,
+                    "edge": pat.tree_edge[i],
+                    "target": float(np.clip(sgn * ang, -MAX_FOLD, MAX_FOLD)),
+                }
             )
             for tag, ax_ in (("a", a), ("n", nl)):
                 body_lines.append(
@@ -196,13 +196,13 @@ def generate_xml(pat, creases, name="origami_free", coll_thick=None):
     </actuator>
 </mujoco>'''
 
-    info = dict(
-        hinges=hinges,
-        targets=np.array([h["target"] for h in hinges]),
-        n_faces=n,
-        n_hinges=len(hinges),
-        n_loops=len(pat.loop_edges),
-    )
+    info = {
+        "hinges": hinges,
+        "targets": np.array([h["target"] for h in hinges]),
+        "n_faces": n,
+        "n_hinges": len(hinges),
+        "n_loops": len(pat.loop_edges),
+    }
     return xml, info
 
 
