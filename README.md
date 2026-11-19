@@ -1,67 +1,24 @@
 <h1 align="center">MuJoCo Origami Engine</h1>
 
-<p align="center">
-  <!-- Release & CI -->
-  <a href="https://github.com/ihsan31415/origami-engine/releases">
-    <img src="https://img.shields.io/github/v/release/ihsan31415/origami-engine?display_name=tag&logo=github" alt="Latest Release">
-  </a>
-  <a href="https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml">
-    <img src="https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml/badge.svg" alt="CI">
-  </a>
-
-  <!-- Python & Scientific Stack -->
-  <a href="https://www.python.org/">
-    <img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11-blue?logo=python&logoColor=white" alt="Python Versions">
-  </a>
-  <a href="https://mujoco.org/">
-    <img src="https://img.shields.io/badge/Physics-MuJoCo-blue" alt="MuJoCo">
-  </a>
-  <a href="https://numpy.org/">
-    <img src="https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?logo=numpy&logoColor=white" alt="NumPy">
-  </a>
-  <a href="https://shapely.readthedocs.io/">
-    <img src="https://img.shields.io/badge/Geometry-Shapely-3776AB" alt="Shapely">
-  </a>
-
-  <!-- Quality & Validation -->
-  <a href="https://github.com/python/mypy">
-    <img src="https://img.shields.io/badge/Type%20Checking-mypy-blue?logo=python&logoColor=white" alt="mypy">
-  </a>
-  <a href="https://github.com/astral-sh/ruff">
-    <img src="https://img.shields.io/badge/Code%20Style-Ruff-D7FF64?logo=ruff&logoColor=black" alt="Ruff">
-  </a>
-  <a href="https://github.com/pre-commit/pre-commit">
-    <img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white" alt="pre-commit">
-  </a>
-  <a href="tests/">
-    <img src="https://img.shields.io/badge/Tests-pytest-0A9EDC?logo=pytest&logoColor=white" alt="pytest">
-  </a>
-  <a href="origami_engine/schemas/crease_pattern.schema.json">
-    <img src="https://img.shields.io/badge/Validation-JSON%20Schema-green" alt="JSON Schema">
-  </a>
-
-  <!-- Documentation -->
-  <a href="ARCHITECTURE.md">
-    <img src="https://img.shields.io/badge/Docs-Architecture-blue?logo=readthedocs&logoColor=white" alt="Architecture">
-  </a>
-  <a href="examples/">
-    <img src="https://img.shields.io/badge/Examples-Available-orange?logo=python&logoColor=white" alt="Examples">
-  </a>
-
-  <!-- Repository Metrics -->
-  <a href="https://github.com/ihsan31415/origami-engine/commits/main">
-    <img src="https://img.shields.io/github/last-commit/ihsan31415/origami-engine" alt="Last Commit">
-  </a>
-  <a href="https://github.com/ihsan31415/origami-engine/issues">
-    <img src="https://img.shields.io/github/issues/ihsan31415/origami-engine" alt="Issues">
-  </a>
-  <a href="https://github.com/ihsan31415/origami-engine/stargazers">
-    <img src="https://img.shields.io/github/stars/ihsan31415/origami-engine" alt="Stars">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/ihsan31415/origami-engine" alt="License">
-  </a>
-</p>
+<div align="center">
+  <a href="https://github.com/ihsan31415/origami-engine/releases"><img src="https://img.shields.io/github/v/release/ihsan31415/origami-engine?display_name=tag&logo=github" alt="Latest Release"></a>
+  <a href="https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml"><img src="https://github.com/ihsan31415/origami-engine/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10%20%7C%203.11-blue?logo=python&logoColor=white" alt="Python"></a>
+  <a href="https://mujoco.org/"><img src="https://img.shields.io/badge/Physics-MuJoCo-blue" alt="MuJoCo"></a>
+  <a href="https://numpy.org/"><img src="https://img.shields.io/badge/NumPy-Scientific%20Computing-013243?logo=numpy&logoColor=white" alt="NumPy"></a>
+  <a href="https://shapely.readthedocs.io/"><img src="https://img.shields.io/badge/Geometry-Shapely-3776AB" alt="Shapely"></a>
+  <br>
+  <a href="https://github.com/python/mypy"><img src="https://img.shields.io/badge/Type%20Checking-mypy-blue?logo=python&logoColor=white" alt="mypy"></a>
+  <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/badge/Code%20Style-Ruff-D7FF64?logo=ruff&logoColor=black" alt="Ruff"></a>
+  <a href="https://docs.pytest.org/"><img src="https://img.shields.io/badge/Tests-pytest-0A9EDC?logo=pytest&logoColor=white" alt="pytest"></a>
+  <a href="origami_engine/schemas/crease_pattern.schema.json"><img src="https://img.shields.io/badge/Validation-JSON%20Schema-green" alt="JSON Schema"></a>
+  <a href="https://github.com/pre-commit/pre-commit"><img src="https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white" alt="pre-commit"></a>
+  <br>
+  <a href="https://github.com/ihsan31415/origami-engine/commits/main"><img src="https://img.shields.io/github/last-commit/ihsan31415/origami-engine" alt="Last Commit"></a>
+  <a href="https://github.com/ihsan31415/origami-engine/issues"><img src="https://img.shields.io/github/issues/ihsan31415/origami-engine" alt="Issues"></a>
+  <a href="https://github.com/ihsan31415/origami-engine/stargazers"><img src="https://img.shields.io/github/stars/ihsan31415/origami-engine" alt="Stars"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/ihsan31415/origami-engine" alt="License"></a>
+</div>
 
 This project is a Python-based origami folding simulator built around MuJoCo. It reconstructs a crease pattern from 2D line segments, validates the paper topology, generates a MuJoCo model for the folded sheet, applies fold-angle targets, and optionally vibrates the support table to simulate a realistic folding environment. The code is structured as an engineering pipeline rather than a pure toy example: crease patterns are normalized into a canonical format, polygon faces are built from the sheet layout, MuJoCo XML is generated from the resulting pattern, and the net displacement of the paper is measured as a forward-folding fitness signal.
 
